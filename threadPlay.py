@@ -16,7 +16,7 @@ def get_outout(cmd):
 if __name__ == '__main__':
     cmd_list = ['brew cask info adafruit-arduino', 'brew cask info galileo-arduino', 'brew cask info arduino']
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        out_res = {executor.submit(get_outout, cmd): cmd for cmd in cmd_list}
+        out_res = [executor.submit(get_outout, cmd) for cmd in cmd_list]
         for out in concurrent.futures.as_completed(out_res):
             data = out.result()
             print('≈'*79 + '\n\n' + data)
